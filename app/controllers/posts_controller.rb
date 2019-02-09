@@ -5,6 +5,11 @@ class PostsController < ApplicationController
   # GET /posts.json
   def index
     @posts = Post.all.order("score desc").paginate(:page => params[:page], :per_page => 3)
+
+    respond_to do |format|
+      format.html {  @posts }
+      format.json { render json: @posts}
+    end
   end
 
   # GET /posts/1
