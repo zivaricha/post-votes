@@ -10,13 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20190209160229) do
+ActiveRecord::Schema.define(version: 20190209164705) do
 
   create_table "posts", force: :cascade do |t|
     t.text "body"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "votes_count", default: 0
+    t.float "score", default: 0.0
   end
 
 end
