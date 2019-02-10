@@ -1,0 +1,34 @@
+version: '2'
+services:
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_ROOT_PASSWORD: zzz
+      MYSQL_USER: root
+      MYSQL_PASSWORD: zzz
+      MYSQL_DATABASE: zzz
+  redis:
+    image: 'redis:4.0-alpine'
+    command: redis-server
+    # volumes:
+    #   - 'redis:/data'
+  web:
+    build: .
+    command: bundle exec rails s
+    volumes:
+      - .:/app
+    ports:
+      - "3000:3000"
+    depends_on:
+      - db
+
+  sidekiq:
+    depends_on:
+      - 'db'
+      - 'redis'
+    build: .
+    command: sidekiq -C config/sidekiq.yml
+    volumes:
+      - '.:/app'
+    env_file:
+      - '.env'
