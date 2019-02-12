@@ -4,7 +4,11 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all.order("score desc").paginate(:page => params[:page], :per_page => 3)
+    @posts = Rails.cache.fetch("TopPosts|page=#{params[:page]}") {
+      puts 1
+      posts = Post.all.order("score desc").paginate(:page => params[:page], :per_page => 3)
+      posts.to_a
+    }
 
     respond_to do |format|
       format.html {  @posts }

@@ -14,7 +14,7 @@
     <% @posts.each do |post| %>
       <tr>
         <td><%= post.body %></td>
-        <td>votes(<%= post.votes_count %>)</td>
+        <td><%= post.score %> points</td>
         <td><%= link_to 'Upvote',vote_post_path(post, vote: "up"), method: :post %></td>
         <% if post.votes_count > 0 %>
           <td><%= link_to 'Downvote',vote_post_path(post, vote: "down"), method: :post %></td>

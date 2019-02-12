@@ -1,5 +1,10 @@
 class ScoreWorker
   include Sidekiq::Worker
+  include Sidetiq::Schedulable
+  include Sidekiq::Status::Worker
+  sidekiq_options :queue => :default, :backtrace => true, :failures => :true
+
+  recurrence { hourly }
 
   def perform
     Post.find_in_batches do |group|

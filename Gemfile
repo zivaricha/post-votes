@@ -11,6 +11,16 @@ gem 'rails', '~> 5.1.6'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3', '~> 1.3.13'
 gem 'sidekiq'
+gem 'sidekiq-failures'
+gem 'sidekiq-status'
+gem 'sidetiq'
+
+gem 'redis'
+gem 'redis-session-store'
+gem 'redis-namespace'
+gem 'hiredis'
+gem 'redis-rails'
+
 gem 'will_paginate', '~> 3.1.0'
 
 

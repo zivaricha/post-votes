@@ -9,7 +9,11 @@ services:
       MYSQL_DATABASE: zzz
   redis:
     image: 'redis:4.0-alpine'
-    command: redis-server
+    command: redis-server --appendonly yes
+        ports:
+      # We'll bind our host's port 6379 to redis's port 6379, so we can use
+      # Redis Desktop Manager (or other tools) with it:
+      - 6379:6379
     # volumes:
     #   - 'redis:/data'
   web:
