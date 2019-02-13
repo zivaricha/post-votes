@@ -10,11 +10,14 @@ class ScoreWorker
     Post.find_in_batches do |group|
       posts_hash = {}
       group.each do |post|
-        score = PostScoreCalculator.new(post).calculate(1)
+        score = PostScoreCalculator.new(post).calculate(10)
         posts_hash[post.id] = {"score": score}
       end
 
       Post.update(posts_hash.keys,posts_hash.values)
     end
+
+    cache_keys = $redis.keys("cache:TopPosts*")
+    $redis.del cache_keys if cache_keys.present?
   end
 end

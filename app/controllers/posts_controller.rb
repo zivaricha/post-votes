@@ -4,11 +4,7 @@ class PostsController < ApplicationController
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Rails.cache.fetch("TopPosts|page=#{params[:page]}") {
-      puts 1
-      posts = Post.all.order("score desc").paginate(:page => params[:page], :per_page => 3)
-      posts.to_a
-    }
+    @posts = Post.get_top_posts(params)
 
     respond_to do |format|
       format.html {  @posts }
@@ -62,6 +58,8 @@ class PostsController < ApplicationController
 
   # POST /posts/1/upvote
   def vote
+    # TODO: Optional, should we update the cached post every time it is being upvoted/downvoted, so it will be portrayed in the UI
+    # same goes for any action that updates a post.
     case params["vote"].downcase
     when "up"
       @post.upvote
